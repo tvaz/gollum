@@ -9,6 +9,7 @@ import json
 import logging
 import datetime
 
+## Logging Setup ##
 logger = logging.getLogger("gollum")
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
@@ -22,19 +23,33 @@ fh_format = logging.Formatter('%(asctime)s - %(lineno)d - %(levelname)-8s - %(me
 fh.setFormatter(fh_format)
 logger.addHandler(fh)
 
+## Some global vars ##
+
 bot = commands.Bot(command_prefix="!")
 active_riddle = ""
 riddles = {}
 
+## Load riddles ##
 with open('/home/bots/gollum/riddles.json') as riddle_data:
 	riddles = json.load(riddle_data)
 
+## Define bot events ##
 @bot.event
 async def on_ready():
     print("Logged in as")
     print(bot.user.name)
     print(bot.user.id)
     print('----------')
+
+## Commands ##
+# the command will be the prefix ('!') plus the function name
+# example command:
+#>>>> @bot.command()
+#>>>> async def foo():
+#>>>> 	await bot.say("Foo")
+#
+# this will be called from Discord using '!foo'
+# its straightforward
 
 @bot.command()
 async def precious():
